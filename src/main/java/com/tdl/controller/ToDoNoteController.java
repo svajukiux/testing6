@@ -114,7 +114,7 @@ public class ToDoNoteController {
 		List<ToDoNoteDTO> notesDTO = new ArrayList<ToDoNoteDTO>();
 		notesDTO = toDoNoteService.getAllToDoNoteDTO(); // turim notes su emailais jei ne embed=users galima toki ir grazinti
 		//List<ToDoNote> allNotes = toDoNoteService.getAllToDoNote();
-		
+		System.out.println("lalalalaal");
 		// buildas yra kur docker failas mazdaug
 		
 		
@@ -152,7 +152,7 @@ public class ToDoNoteController {
 								return new ResponseEntity<String>("\"Unable to connect to user web service\"", HttpStatus.SERVICE_UNAVAILABLE);
 								}
 							else {
-								return new ResponseEntity<String>(ex2.getMessage(),HttpStatus.INTERNAL_SERVER_ERROR);
+								return new ResponseEntity<String>("\"Unable to connect to user web service\"", HttpStatus.SERVICE_UNAVAILABLE);
 							}
 						}
 						
@@ -229,7 +229,7 @@ public class ToDoNoteController {
 						return new ResponseEntity<String>("\"Unable to connect to user web service\"", HttpStatus.SERVICE_UNAVAILABLE);
 						}
 					else {
-						return new ResponseEntity<String>(ex2.getMessage(),HttpStatus.INTERNAL_SERVER_ERROR);
+						return new ResponseEntity<String>("\"Unable to connect to user web service\"", HttpStatus.SERVICE_UNAVAILABLE);
 					}
 				}
 
@@ -304,7 +304,7 @@ public class ToDoNoteController {
 							return new ResponseEntity<String>("\"Unable to connect to user web service\"", HttpStatus.SERVICE_UNAVAILABLE);
 							}
 						else {
-							return new ResponseEntity<String>(ex2.getMessage(),HttpStatus.INTERNAL_SERVER_ERROR);
+							return new ResponseEntity<String>("\"Unable to connect to user web service\"", HttpStatus.SERVICE_UNAVAILABLE);
 						}
 					}
 					
@@ -374,7 +374,7 @@ public class ToDoNoteController {
 			}
 		
 			else {
-				return new ResponseEntity<String>(ex2.getMessage(),HttpStatus.INTERNAL_SERVER_ERROR);
+				return new ResponseEntity<String>("\"Unable to connect to user web service\"", HttpStatus.SERVICE_UNAVAILABLE);
 			}
 		}
 		
@@ -426,7 +426,7 @@ public class ToDoNoteController {
 					return new ResponseEntity<String>("\"Unable to connect to user web service\"", HttpStatus.SERVICE_UNAVAILABLE);
 					}
 				else {
-					return new ResponseEntity<String>(ex2.getMessage(),HttpStatus.INTERNAL_SERVER_ERROR);
+					return new ResponseEntity<String>("\"Unable to connect to user web service\"", HttpStatus.SERVICE_UNAVAILABLE);
 				}
 			}
 		}
@@ -491,7 +491,7 @@ public class ToDoNoteController {
 				return new ResponseEntity<String>("\"Unable to connect to user web service\"", HttpStatus.SERVICE_UNAVAILABLE);
 				}
 			else {
-				return new ResponseEntity<String>(ex2.getMessage(),HttpStatus.INTERNAL_SERVER_ERROR);
+				return new ResponseEntity<String>("\"Unable to connect to user web service\"", HttpStatus.SERVICE_UNAVAILABLE);
 			}
 		}
 		
@@ -520,6 +520,18 @@ public class ToDoNoteController {
 				return ResponseEntity.status(ex.getRawStatusCode()).headers(ex.getResponseHeaders())
 		                .body(ex.getResponseBodyAsString());
 			}
+		catch(RestClientException ex2) {
+			if(ex2.getCause() instanceof ConnectException) {
+				System.out.println(ex2.getCause());
+				return new ResponseEntity<String>("\"Could not connect to user service\"",HttpStatus.SERVICE_UNAVAILABLE);
+			}
+			else if(ex2.getCause() instanceof UnknownHostException) {
+				return new ResponseEntity<String>("\"Unable to connect to user web service\"", HttpStatus.SERVICE_UNAVAILABLE);
+				}
+			else {
+				return new ResponseEntity<String>("\"Unable to connect to user web service\"", HttpStatus.SERVICE_UNAVAILABLE);
+			}
+		}
 	// istryniau daug tu throws not sure if thats that good
 		
 		System.out.println("Rip");
@@ -650,6 +662,18 @@ public class ToDoNoteController {
 					return ResponseEntity.status(ex.getRawStatusCode()).headers(ex.getResponseHeaders())
 			                .body(ex.getResponseBodyAsString());
 				}
+			catch(RestClientException ex2) {
+				if(ex2.getCause() instanceof ConnectException) {
+					System.out.println(ex2.getCause());
+					return new ResponseEntity<String>("\"Could not connect to user webservice\"",HttpStatus.SERVICE_UNAVAILABLE);
+				}
+				else if(ex2.getCause() instanceof UnknownHostException) {
+					return new ResponseEntity<String>("\"Unable to connect to user web service\"", HttpStatus.SERVICE_UNAVAILABLE);
+					}
+				else {
+					return new ResponseEntity<String>(ex2.getMessage(),HttpStatus.INTERNAL_SERVER_ERROR);
+				}
+			}
 			
 		}
 		toDoNoteService.addToDoNoteDTO(noteDTO);
@@ -770,6 +794,18 @@ public class ToDoNoteController {
 					return ResponseEntity.status(ex.getRawStatusCode()).headers(ex.getResponseHeaders())
 			                .body(ex.getResponseBodyAsString());
 				}
+			catch(RestClientException ex2) {
+				if(ex2.getCause() instanceof ConnectException) {
+					System.out.println(ex2.getCause());
+					return new ResponseEntity<String>("\"Could not connect to user webservice\"",HttpStatus.SERVICE_UNAVAILABLE);
+				}
+				else if(ex2.getCause() instanceof UnknownHostException) {
+					return new ResponseEntity<String>("\"Unable to connect to user web service\"", HttpStatus.SERVICE_UNAVAILABLE);
+					}
+				else {
+					return new ResponseEntity<String>(ex2.getMessage(),HttpStatus.INTERNAL_SERVER_ERROR);
+				}
+			}
 			
 		}
 		oldNoteDTO.setEmails(tempEmails);
@@ -922,6 +958,18 @@ public class ToDoNoteController {
 						return ResponseEntity.status(ex.getRawStatusCode()).headers(ex.getResponseHeaders())
 				                .body(ex.getResponseBodyAsString());
 					}
+				catch(RestClientException ex2) {
+					if(ex2.getCause() instanceof ConnectException) {
+						System.out.println(ex2.getCause());
+						return new ResponseEntity<String>("\"Could not connect to user webservice\"",HttpStatus.SERVICE_UNAVAILABLE);
+					}
+					else if(ex2.getCause() instanceof UnknownHostException) {
+						return new ResponseEntity<String>("\"Unable to connect to user web service\"", HttpStatus.SERVICE_UNAVAILABLE);
+						}
+					else {
+						return new ResponseEntity<String>(ex2.getMessage(),HttpStatus.INTERNAL_SERVER_ERROR);
+					}
+				}
 				
 			}
 			//oldNoteDTO.setEmails(tempEmails);
