@@ -1,0 +1,23 @@
+version: '3'
+
+services:
+  springboot-docker-compose-app-container:
+    build: .
+    ports:
+      - "80:5001"
+    depends_on:
+    - friendservice
+    networks:
+    - mynet
+    container_name: base_notes
+  friendservice:
+    build: ./Pirmas
+    command: python app.py
+    ports:
+    - 5000:5000
+    container_name: friend
+    networks:
+    - mynet
+    
+networks:
+    mynet:
