@@ -2,7 +2,7 @@ version: '3'
 
 services:
   springboot-docker-compose-app-container:
-    build: .
+    image: svka4019/notes2:latest
     ports:
       - "80:5001"
     depends_on:
