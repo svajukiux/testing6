@@ -121,7 +121,7 @@ public class ToDoNoteController {
 			
 		if(embed!=null && embed.equals("users")) {
 			//ArrayList<String> emails = new ArrayList<String>();
-			RestTemplate restTemplate = new RestTemplate();
+			RestTemplate restTemplate = new RestTemplate(getClientHttpRequestFactory());
 			for(int i=0; i< notesDTO.size();i++) {
 				ArrayList<String> emails = notesDTO.get(i).getUserEmails();
 				if(!emails.isEmpty()) { // jei ne empty email ArrayList
@@ -188,7 +188,7 @@ public class ToDoNoteController {
 	@GetMapping("/todos/{toDoNoteId}/users")
 	public ResponseEntity<?> getNotesUsers(@PathVariable int toDoNoteId) throws JsonParseException, JsonMappingException, IOException {
 		ToDoNoteDTO note = toDoNoteService.getToDoNoteDTOById(toDoNoteId);
-		RestTemplate restTemplate = new RestTemplate();
+		RestTemplate restTemplate = new RestTemplate(getClientHttpRequestFactory());
 		List<User> users = new ArrayList<User>();
 		//final String uriTest = "http://193.219.91.103:1858/";
 
@@ -338,7 +338,7 @@ public class ToDoNoteController {
 	@GetMapping("/users")
 	public ResponseEntity<?> getUsersFromOtherService() throws JsonParseException, JsonMappingException, IOException {
 		final String uri = "http://friend:5000/users";//"http://friend:5000/users";
-		RestTemplate restTemplate = new RestTemplate();
+		RestTemplate restTemplate = new RestTemplate(getClientHttpRequestFactory());
 		ResponseEntity<String> result =null;
 		//int statusCode=0;
 		ObjectMapper mapper = new ObjectMapper();
@@ -388,7 +388,7 @@ public class ToDoNoteController {
 	@GetMapping("/todos/{toDoNoteId}/users/{email}")
 	public ResponseEntity<?> getUserByEmail(@PathVariable int toDoNoteId,@PathVariable String email) throws JsonParseException, JsonMappingException, IOException {
 		ToDoNoteDTO noteDTO = toDoNoteService.getToDoNoteDTOById(toDoNoteId);
-		RestTemplate restTemplate = new RestTemplate();
+		RestTemplate restTemplate = new RestTemplate(getClientHttpRequestFactory());
 		if(noteDTO==null) {
 			throw new ToDoNoteNotFoundException("Note with id "+ toDoNoteId + " not found");
 			
@@ -445,7 +445,7 @@ public class ToDoNoteController {
 		}
 		String email = user.getEmail();
 		final String uri = "http://friend:5000/users/"+email;
-		RestTemplate restTemplate = new RestTemplate();
+		RestTemplate restTemplate = new RestTemplate(getClientHttpRequestFactory());
 		ResponseEntity<String> result =null;
 		int statusCode=0;
 		ObjectMapper mapper = new ObjectMapper();
@@ -579,7 +579,7 @@ public class ToDoNoteController {
 			
 			String email = users.get(i).getEmail();
 			final String uri = "http://friend:5000/users/"+email;
-			RestTemplate restTemplate = new RestTemplate();
+			RestTemplate restTemplate = new RestTemplate(getClientHttpRequestFactory());
 			ResponseEntity<String> result =null;
 			int statusCode=0;
 			ObjectMapper mapper = new ObjectMapper();
@@ -700,7 +700,7 @@ public class ToDoNoteController {
 			
 			String email = users.get(i).getEmail();
 			final String uri = "http://friend:5000/users/"+email;
-			RestTemplate restTemplate = new RestTemplate();
+			RestTemplate restTemplate = new RestTemplate(getClientHttpRequestFactory());
 			ResponseEntity<String> result =null;
 			int statusCode=0;
 			ObjectMapper mapper = new ObjectMapper();
@@ -849,7 +849,7 @@ public class ToDoNoteController {
 				
 				String email = users.get(i).getEmail();
 				final String uri = "http://friend:5000/users/"+email;
-				RestTemplate restTemplate = new RestTemplate();
+				RestTemplate restTemplate = new RestTemplate(getClientHttpRequestFactory());
 				ResponseEntity<String> result =null;
 				int statusCode=0;
 				ObjectMapper mapper = new ObjectMapper();
@@ -935,7 +935,7 @@ public class ToDoNoteController {
 			for(int i=0; i< emails.size(); i++) {
 				String currentEmail = emails.get(i);
 				final String uri = "http://friend:5000/users/"+currentEmail;
-				RestTemplate restTemplate = new RestTemplate();
+				RestTemplate restTemplate = new RestTemplate(getClientHttpRequestFactory());
 				ResponseEntity<String> result =null;
 				int statusCode=0;
 				ObjectMapper mapper = new ObjectMapper();
